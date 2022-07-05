@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+import ChatWindow from "./pages/ChatWindow";
+import Register from "./pages/Register";
+import Users from "./pages/Users";
 
-function App() {
+export default function App() {
+  const [socket, setsocket] = useState(null);
+  const [user, setUser] = useState("");
+  useEffect(() => {
+    const sock = io("localhost:8000");
+    setsocket(sock);
+    console.log("imm r");
+    return () => sock.close();
+  }, []);
+ const data = ()=> console.log('hi');
+  useEffect(() => {
+    socket && socket.emit("register", user );
+  }, [user, socket]);
+
+  const dataHanlder = (data) => {
+    setUser(data);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="d-flex">
+        <Register data={dataHanlder} />
+      </div>
+    </>
   );
 }
-
-export default App;

@@ -1,0 +1,7 @@
+#user_panel {
+  z-index: 1132323232;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  scroll-behavior: auto;
+}
